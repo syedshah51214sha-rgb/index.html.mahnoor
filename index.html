@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Mahnoor</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;700&display=swap');
+        
+        body {
+            margin: 0; padding: 0; background-color: #ffe5ec;
+            font-family: 'Montserrat', sans-serif; display: flex;
+            justify-content: center; align-items: center; height: 100vh;
+            overflow: hidden; flex-direction: column;
+        }
+
+        /* Envelope Styles */
+        .envelope-wrapper {
+            position: relative; cursor: pointer; transition: 0.5s;
+        }
+
+        .envelope {
+            position: relative; width: 280px; height: 180px;
+            background: #ff4d6d; border-radius: 0 0 5px 5px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .envelope:before {
+            content: ""; position: absolute; top: 0; z-index: 2;
+            border-top: 100px solid #ff758f; border-left: 140px solid transparent;
+            border-right: 140px solid transparent; transform-origin: top;
+            transition: all 0.5s ease-in-out;
+        }
+
+        .letter {
+            position: absolute; bottom: 0; left: 10px; width: 260px; height: 160px;
+            background: white; z-index: 1; transition: all 0.5s ease-in-out;
+            padding: 15px; box-sizing: border-box; text-align: center;
+            color: #333; font-size: 0.8rem; border-radius: 5px;
+        }
+
+        /* Open State */
+        .envelope-wrapper.open .envelope:before { transform: rotateX(180deg); z-index: 0; }
+        .envelope-wrapper.open .letter { transform: translateY(-120px); height: 250px; z-index: 2; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+
+        .btn-propose {
+            display: none; margin-top: 150px; padding: 15px 40px;
+            background: #ff4d6d; color: white; border: none;
+            border-radius: 50px; font-family: 'Great Vibes', cursive;
+            font-size: 1.8rem; cursor: pointer; box-shadow: 0 5px 15px #ff4d6d;
+            animation: bounce 2s infinite;
+        }
+
+        #proposal-screen {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, #2b0000 0%, #050005 100%);
+            z-index: 100; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+        }
+
+        .heart { position: absolute; color: #ff4d6d; animation: up 3s linear infinite; }
+        @keyframes up { to { transform: translateY(-100vh); opacity: 0; } }
+        @keyframes bounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+    </style>
+</head>
+<body>
+
+    <audio id="mySong" preload="auto">
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="envelope-wrapper" id="envWrap" onclick="openEnvelope()">
+        <div class="envelope">
+            <div class="letter">
+                <h3 style="font-family: 'Great Vibes'; color: #ff4d6d; font-size: 1.5rem;">Dearest Mahnoor,</h3>
+                <p>Tumhara sath meri zindagi ki sab se bari nishani hai... <br> <strong>- Zulfiqar</strong></p>
+                <img src="pic1.jpg" style="width: 80px; border-radius: 5px; margin-top: 5px;">
+            </div>
+        </div>
+    </div>
+
+    <button class="btn-propose" id="proposeBtn" onclick="showProposal()">Click Here, My Life</button>
+
+    <div id="proposal-screen">
+        <h1 style="font-family: 'Great Vibes'; color: #ff4d6d; font-size: 4rem;">Mahnoor...</h1>
+        <h2 style="font-size: 2rem; color: white;">Will You Be Mine Forever?</h2>
+        <img src="pic2.png" style="width: 200px; border: 5px solid white; margin: 20px;">
+        <p style="font-family: 'Great Vibes'; color: #ff4d6d; font-size: 2.5rem;">Syed Zulfiqar Mehdi Naqvi</p>
+    </div>
+
+    <script>
+        const song = document.getElementById("mySong");
+
+        function openEnvelope() {
+            document.getElementById('envWrap').classList.add('open');
+            
+            // Jaise hi envelope open hoga, gana bajna shuru ho jayega
+            song.play().catch(error => {
+                console.log("Audio play failed:", error);
+            }); 
+            
+            setTimeout(() => {
+                document.getElementById('proposeBtn').style.display = 'block';
+            }, 1000);
+        }
+
+        function showProposal() {
+            document.getElementById('proposal-screen').style.display = 'flex';
+            setInterval(createHeart, 300);
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = Math.random() * 20 + 20 + 'px';
+            heart.style.duration = Math.random() * 2 + 3 + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 3000);
+        }
+    </script>
+</body>
+</html>
